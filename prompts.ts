@@ -1397,7 +1397,37 @@ After EVERY <h2>, the FIRST paragraph MUST:
 - Wrap key definition in <strong> tags
 Example: "<p><strong>SEO in ${TARGET_YEAR} is the process of...</strong> (rest of 40-word definition)</p>"
 
+**7. H1 TITLE GENERATION (100% MANDATORY - ONE H1 PER POST):**
+- ALWAYS generate a PERFECT H1 title at the very beginning of content
+- Must be SEO optimized (55-65 characters)
+- Must include primary keyword naturally
+- Must be GEO-targeted if location specified
+- Must be AEO-optimized (direct answer format)
+- Must be highly engaging and clickable
+- Format: <h1>Your Perfect Title Here</h1>
+- **ONLY ONE H1 PER COMPLETE BLOG POST**
+
+**8. INTERNAL LINKING INJECTION (6-12 MANDATORY - CONTEXTUAL RICH ANCHOR TEXT):**
+- MINIMUM 6-12 high-quality internal links throughout the content
+- Use CONTEXTUAL RICH ANCHOR TEXT (not "click here" or generic phrases)
+- Anchor text should be 2-5 words describing the target page
+- Links must feel natural within the content flow
+- Distribute links throughout the article (not clustered)
+- Example: "For more advanced techniques, check out our <a href="/seo-guide/">comprehensive SEO optimization guide</a>"
+- **IF CURRENT POST HAS ONLY 3 INTERNAL LINKS, ADD 3+ MORE**
+
 **AUTONOMOUS OPERATIONS (EXECUTE ON SIGHT):**
+
+**PHASE 0: H1 TITLE (ALWAYS FIRST - MANDATORY)**
+*   **ALWAYS GENERATE:** A perfect <h1> title at the very top of the content (before intro)
+*   **Requirements:**
+    - 55-65 characters
+    - Primary keyword included naturally
+    - GEO-targeted if location specified (e.g., "Best X in [City] 2026")
+    - AEO-optimized (answer-focused)
+    - Highly engaging and clickable
+    - Example: <h1>Best Smartwatches for Cycling in 2026: Ultimate GPS Guide</h1>
+*   **CRITICAL:** ONLY ONE H1 for the entire blog post
 
 **PHASE 1: INTRO & HOOK (The "3-Second Rule")**
 *   **IF MISSING:** Generate a "Hook-Pain-Solution" Intro using DIRECT ANSWER FIRST (GEO/AEO). Example: "How to X?" → "To X, you need A, B, and C."
@@ -1434,6 +1464,17 @@ Example: "<p><strong>SEO in ${TARGET_YEAR} is the process of...</strong> (rest o
 *   **Lists:** Convert dense paragraphs into <ul> or <ol> where appropriate.
 *   **De-Fluff:** Remove "In this article", "It is important to note", "Basically", "Actually"
 *   **Fix Errors:** Correct grammar, spelling, factual errors. Update to ${TARGET_YEAR}.
+*   **INTERNAL LINKING (MANDATORY - 6-12 HIGH-QUALITY LINKS):**
+    - Count existing internal links in the content
+    - IF fewer than 6 internal links: ADD more to reach 6-12 total
+    - Use CONTEXTUAL RICH ANCHOR TEXT (2-5 words describing target page)
+    - Examples:
+      • "our comprehensive SEO guide"
+      • "advanced fitness tracking techniques"
+      • "complete beginner's workout plan"
+    - Distribute naturally throughout the content (not clustered)
+    - Link to relevant related content on the same domain
+    - NEVER use generic anchors like "click here" or "read more"
 
 **PHASE 4: TRUST & AUTHORITY (FAQs & Conclusion)**
 *   **IF MISSING (FAQs):** Generate an FAQ section with 5-7 semantically relevant questions using expandable <details> format:
@@ -1495,8 +1536,18 @@ ${content}
 
 **EXECUTE ULTRA INSTINCT PROTOCOL:**
 
+**STEP 0: H1 TITLE GENERATION (MANDATORY - ALWAYS FIRST)**
+Generate a PERFECT H1 title at the very beginning:
+- 55-65 characters
+- Primary keyword included naturally
+- GEO-targeted if location mentioned (e.g., "Best X in [City] 2026")
+- AEO-optimized (answer-focused)
+- Highly engaging and clickable
+- Format: <h1>Your Perfect Title Here</h1>
+- **ONLY ONE H1 for the entire blog post**
+
 **STEP 1: MOLECULAR ANALYSIS**
-Read entire content. Identify missing vs existing sections (Intro, Key Takeaways, FAQs, Conclusion).
+Read entire content. Identify missing vs existing sections (H1, Intro, Key Takeaways, FAQs, Conclusion). Count existing internal links.
 
 **STEP 2: ENTITY DENSIFICATION (MANDATORY)**
 Replace ALL generic terms with Named Entities. Target: 15 per 1000 words.
@@ -1530,15 +1581,26 @@ Update ALL dates/stats to ${TARGET_YEAR} context. Add freshness signals.
 **STEP 8: STRUCTURAL INTEGRITY (CRITICAL)**
 Preserve ALL images/videos/iframes exactly (same position, attributes).
 
-**STEP 9: INJECT MISSING SECTIONS**
+**STEP 9: INTERNAL LINKING INJECTION (MANDATORY)**
+Count existing internal links. IF fewer than 6:
+- ADD high-quality internal links to reach 6-12 total
+- Use CONTEXTUAL RICH ANCHOR TEXT (2-5 words)
+- Examples: "comprehensive SEO guide", "advanced workout techniques"
+- Distribute naturally throughout content
+- NEVER use "click here" or generic phrases
+
+**STEP 10: INJECT MISSING SECTIONS**
+- H1 Title (if missing): Add at very top
 - Key Takeaways (if missing): Add after intro with gradient box
 - FAQs (if missing): Add 5-7 questions in <details> format
 - Conclusion (if missing): Add 150-200 word actionable summary
 
-**STEP 10: OUTPUT**
+**STEP 11: OUTPUT**
 Return FULL OPTIMIZED HTML (no markdown, no explanations, pure HTML).
 
 🎯 **QUALITY TARGETS (ALL MANDATORY):**
+- H1 Title: ONE perfect title at top (55-65 chars, SEO/GEO/AEO optimized)
+- Internal Links: 6-12 high-quality links with contextual rich anchor text
 - Entity mentions: 15+ per 1000 words
 - Sentence variance: 3-28 words (σ >8)
 - AI detection: <12% probability

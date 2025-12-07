@@ -885,8 +885,10 @@ export class MaintenanceEngine {
                 body.innerHTML = surgicalSanitizer(optimizedHtml);
                 structuralFixesMade++;
                 this.logCallback(`✅ GOD MODE: Content fully reconstructed & optimized`);
+                this.logCallback(`   - H1 Title: Perfect SEO/GEO/AEO optimized title generated`);
                 this.logCallback(`   - Intro optimized (direct answer first)`);
                 this.logCallback(`   - Key takeaways injected/optimized`);
+                this.logCallback(`   - Internal Links: 6-12 high-quality contextual links added`);
                 this.logCallback(`   - Body content surgically enhanced`);
                 this.logCallback(`   - FAQs added/optimized (schema-ready)`);
                 this.logCallback(`   - Conclusion added/optimized (actionable)`);
@@ -996,14 +998,19 @@ export class MaintenanceEngine {
         }
 
         const currentLinkCount = (body.innerHTML.match(/<a[^>]+href=[^>]*>/g) || []).length;
-        this.logCallback(`📊 CURRENT LINKS: ${currentLinkCount} total links after quality filter`);
+        const internalLinkCount = Array.from(body.querySelectorAll('a')).filter(a => {
+            const href = a.getAttribute('href') || '';
+            return href && !href.startsWith('http');
+        }).length;
 
-        if (currentLinkCount < 5 && context.existingPages.length > 0) {
-            this.logCallback(`🔧 ADDING: Internal links (currently ${currentLinkCount})...`);
+        this.logCallback(`📊 CURRENT LINKS: ${currentLinkCount} total links (${internalLinkCount} internal) after quality filter`);
+
+        if (internalLinkCount < 6 && context.existingPages.length > 0) {
+            this.logCallback(`🔧 ADDING: Internal links to reach 6-12 (currently ${internalLinkCount})...`);
             try {
                 const availablePagesString = context.existingPages
                     .filter(p => p.slug && p.title && p.id !== page.id)
-                    .slice(0, 30)
+                    .slice(0, 50)
                     .map(p => `- ${p.title} (slug: ${p.slug})`)
                     .join('\n');
 
@@ -1017,8 +1024,11 @@ export class MaintenanceEngine {
                 const linkSuggestions = JSON.parse(linksResponse);
 
                 let linksAdded = 0;
+                const targetLinkCount = Math.min(12, 6 + Math.floor(Math.random() * 7)); // Random between 6-12
+                const linksNeeded = Math.max(0, targetLinkCount - internalLinkCount);
+
                 for (const suggestion of linkSuggestions) {
-                    if (linksAdded >= 8) break; // Max 8 new links
+                    if (linksAdded >= linksNeeded || linksAdded >= 12) break; // Max 12 new links total
 
                     const targetPage = context.existingPages.find(p => p.slug === suggestion.targetSlug);
                     if (targetPage && targetPage.id) {
@@ -1042,7 +1052,8 @@ export class MaintenanceEngine {
 
                 if (linksAdded > 0) {
                     structuralFixesMade++;
-                    this.logCallback(`✅ ADDED: ${linksAdded} high-quality contextual internal links (3+ words each)`);
+                    const finalInternalCount = internalLinkCount + linksAdded;
+                    this.logCallback(`✅ ADDED: ${linksAdded} high-quality contextual internal links (now ${finalInternalCount} total, target: 6-12)`);
                 }
             } catch (e: any) {
                 this.logCallback(`❌ FAILED: Internal linking - ${e.message}`);
