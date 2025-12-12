@@ -150,30 +150,49 @@ export class AEOOptimizer {
   private scoreParagraphForAEO(paragraph: string, keyword: string): number {
     let score = 50;
 
+    // 1. Length Optimization (Hormozi Style: Short & Punchy)
+    // Ideal: 40-160 chars.
     if (paragraph.length >= 40 && paragraph.length <= 160) {
-      score += 20;
-    } else if (paragraph.length > 160 && paragraph.length <= 300) {
+      score += 25; // Boosted from 20
+    } else if (paragraph.length > 160 && paragraph.length <= 250) {
       score += 10;
+    } else if (paragraph.length > 250) {
+      score -= 10; // Penalize wall of text
     }
 
+    // 2. Keyword Relevance
     if (paragraph.toLowerCase().includes(keyword.toLowerCase())) {
       score += 15;
     }
 
+    // 3. Front-Loading (Direct Answer)
     const startsWithKeyword = paragraph.toLowerCase().startsWith(keyword.toLowerCase());
     if (startsWithKeyword) {
-      score += 10;
+      score += 15; // Boosted from 10
     }
 
+    // 4. Definition Pattern (Featured Snippet Gold)
     const hasDefinitionPattern =
       /^(.*?is|are|means|refers to|can be defined as)/i.test(paragraph);
     if (hasDefinitionPattern) {
-      score += 15;
+      score += 20; // Boosted from 15
     }
 
+    // 5. Data Density (Trust Signal)
     const hasNumbersOrData = /\d+/.test(paragraph);
     if (hasNumbersOrData) {
-      score += 5;
+      score += 10; // Boosted from 5
+    }
+
+    // 6. Hormozi Style Check (New)
+    // Penalize long sentences (> 20 words)
+    const sentences = paragraph.split(/[.!?]+/).filter(s => s.trim().length > 0);
+    const avgWords = sentences.reduce((acc, s) => acc + s.trim().split(/\s+/).length, 0) / sentences.length;
+
+    if (avgWords <= 12) {
+      score += 15; // Reward short, punchy sentences
+    } else if (avgWords > 20) {
+      score -= 15; // Penalize academic fluff
     }
 
     return Math.min(score, 100);
@@ -204,8 +223,8 @@ export class AEOOptimizer {
       <div itemscope itemtype="https://schema.org/FAQPage" style="margin-top: 3rem;">
         <h2>Frequently Asked Questions</h2>
         ${faqSection
-          .map(
-            (faq) => `
+        .map(
+          (faq) => `
             <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
               <h3 itemprop="name" style="color: #1e40af; font-size: 1.125rem; margin-bottom: 0.5rem;">${faq.question}</h3>
               <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
@@ -213,8 +232,8 @@ export class AEOOptimizer {
               </div>
             </div>
           `
-          )
-          .join('')}
+        )
+        .join('')}
       </div>
     `;
 
