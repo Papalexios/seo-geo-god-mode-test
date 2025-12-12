@@ -1,12 +1,13 @@
 {
-  "name": "wp-content-optimizer-pro",
+  "name": "seo-geo-god-mode",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.66.0",
