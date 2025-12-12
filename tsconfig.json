@@ -9,19 +9,19 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "noUncheckedIndexedAccess": true,
-    "noImplicitReturns": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true
+    "jsx": "react-jsx"
   },
-  "include": ["."],
-  "exclude": ["src"],
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["dist", "dist-ssr", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
