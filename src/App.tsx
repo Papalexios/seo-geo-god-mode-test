@@ -19,6 +19,15 @@ import { fetchWithProxies, smartCrawl } from './contentUtils';
 import { listNeuronProjects, NeuronProject } from './neuronwriter';
 // @ts-ignore
 import mermaid from 'mermaid';
+// SOTA Service Integrations
+import { FabricationDetector } from './FABRICATION_DETECTOR';
+import { EnhancedPrompts } from './ENHANCED_PROMPTS';
+import { QualityGates } from './QUALITY_GATES';
+import { ReferenceValidator } from './REFERENCE_VALIDATOR';
+import { DynamicReferenceGenerator } from './DYNAMIC_REFERENCE_GENERATOR';
+import { GodModePriorityManager } from './GOD_MODE_PRIORITY_MANAGER';
+import { GodModeQualityOverhaul } from './GOD_MODE_QUALITY_OVERHAUL';
+
 
 interface ErrorBoundaryProps {
     children?: React.ReactNode;
