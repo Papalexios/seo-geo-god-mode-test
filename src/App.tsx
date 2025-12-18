@@ -27,6 +27,10 @@ import { ReferenceValidator } from './REFERENCE_VALIDATOR';
 import { DynamicReferenceGenerator } from './DYNAMIC_REFERENCE_GENERATOR';
 import { GodModePriorityManager } from './GOD_MODE_PRIORITY_MANAGER';
 import { GodModeQualityOverhaul } from './GOD_MODE_QUALITY_OVERHAUL';
+import { AdaptiveModelOrchestrator } from './adaptive-model-orchestrator';
+import { MultiLayerQAPipeline } from './quality-assurance-pipeline';
+import { AutonomousMaintenanceEngine } from './autonomous-maintenance-engine';
+import { RealTimeAnalyticsDashboard } from './real-time-analytics-dashboard';
 
 
 interface ErrorBoundaryProps {
@@ -129,6 +133,9 @@ const App = () => {
     const [bulkAutoPublishProgress, setBulkAutoPublishProgress] = useState({ current: 0, total: 0 });
     const [bulkPublishLogs, setBulkPublishLogs] = useState<string[]>([]);
     const [isGodMode, setIsGodMode] = useState(() => localStorage.getItem('sota_god_mode') === 'true');
+     const [godModePriorityUrls, setGodModePriorityUrls] = useState<string[]>([]);
+ const [orchestrator, setOrchestrator] = useState<AdaptiveModelOrchestrator | null>(null);
+ const [qaP ipeline, setQAPipeline] = useState<MultiLayerQAPipeline | null>(null);
     const [godModeLogs, setGodModeLogs] = useState<string[]>([]);
     const [optimizedHistory, setOptimizedHistory] = useState<OptimizedLog[]>([]);
     
