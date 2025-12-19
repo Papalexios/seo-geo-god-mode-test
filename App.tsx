@@ -130,7 +130,6 @@ const App = () => {
      const [prioritizedUrlsForGodMode, setPrioritizedUrlsForGodMode] = useState<string[]>(() => JSON.parse(localStorage.getItem('prioritizedUrlsForGodMode') || '[]'));
     const [godModeLogs, setGodModeLogs] = useState<string[]>([]);
     const [excludedUrls, setExcludedUrls] = useState<string[]>(() => JSON.parse(localStorage.getItem('excludedUrls') || '[]'));
-</div>
     const [optimizedHistory, setOptimizedHistory] = useState<OptimizedLog[]>([]);
     const [wpDiagnostics, setWpDiagnostics] = useState<any>(null);
     const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
