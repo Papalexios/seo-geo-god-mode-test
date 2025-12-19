@@ -135,9 +135,7 @@ const App = () => {
     const [wpDiagnostics, setWpDiagnostics] = useState<any>(null);
     const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
 
-    799
         mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose', fontFamily: 'Inter' }); }, []);
-    799
         if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500); }, [selectedItemForReview]);
     152
         localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
