@@ -1,56 +1,19 @@
-# Cloudflare Wrangler Configuration - SOTA Production Grade
-# Project: SEO GOD MODE - Quantum SOTA Upgrade
+# Cloudflare Pages configuration for SEO GEO GOD MODE
+# SOTA production grade - Quantum SOTA upgrade
 
 name = "seo-geo-god-mode"
-type = "javascript"
 
-# Pages Build Output Configuration
+# Pages build output directory
 pages_build_output_dir = "dist"
 
-# Compatibility with latest Cloudflare Workers runtime
+# Compatibility settings for Cloudflare Workers
 compatibility_date = "2025-01-15"
 compatibility_flags = ["nodejs_compat"]
 
-# Development Server Configuration
-[env.development]
-route = "http://localhost:*/*"
-zone_id = ""
-
-# Production Environment
+# Production environment configuration
 [env.production]
-route = "https://*.pages.dev/*"
-zone_id = ""
+name = "seo-geo-god-mode-prod"
 
-# Build Configuration for Vite
-[build]
-command = "npm run build"
-cwd = "./"
-watch_paths = ["src/**/*.tsx", "src/**/*.ts", "src/**/*.css"]
-
-# Build cache optimization
-[build.upload]
-format = "service-worker"
-
-# Triggers for deployment
-[triggers.crons]
-crons = [""]  # Add cron jobs as needed
-
-# Custom Domain Configuration (add your domain)
-# [routes]
-# pattern = "yourdomain.com/*"
-# zone_name = "yourdomain.com"
-
-# Analytics Engine for performance tracking
-[[analytics.datasets]]
-dataset = "seo_optimization_metrics"
-
-# Durable Objects bindings (optional for future features)
-# [[durable_objects.bindings]]
-# name = "SOTA_STATE"
-# class_name = "SOTAState"
-# script_name = "seo-geo-god-mode"
-# environment = "production"
-
-# Workers Analytics Integration
-[observability]
-enabled = true
+# Preview environment configuration
+[env.preview]
+name = "seo-geo-god-mode-preview"
