@@ -141,8 +141,11 @@ useEffect(() => {
 
   useEffect(() => {
     if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500);
-  }, [selectedItemForReview])
-        localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
+  }, [selectedItemForReview]);
+
+  useEffect(() => {
+    localStorage.setItem('apiKeys', JSON.stringify(apiKeys));
+  }, [apiKeys])
     useEffect(() => { localStorage.setItem('selectedModel', selectedModel); }, [selectedModel]);
     useEffect(() => { localStorage.setItem('selectedGroqModel', selectedGroqModel); }, [selectedGroqModel]);
     useEffect(() => { localStorage.setItem('wpConfig', JSON.stringify(wpConfig)); }, [wpConfig]);
