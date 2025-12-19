@@ -3,8 +3,5 @@ compatibility_date = "2025-01-15"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
 
-[build]
-command = "npm run build"
-
 [env.production]
 route = "seo-geo-god-mode-test.pages.dev"
