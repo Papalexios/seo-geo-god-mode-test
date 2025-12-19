@@ -865,39 +865,6 @@ useEffect(() => {
                                                         </div>
                                                     </div>
                                                     
-        {/* Prioritization Controls */}
-        <div style={{color: '#ff59eb', fontWeight: 'bold', marginBottom: '1rem'}}>
-          ✨ Prioritized URLs For God Mode
-        </div>
-
-        <div style={{display: 'grid', gridTemplateColumns: '1fr'}}>
-          <div>
-            <label style={{display: 'block', color: '#ff59eb'}}>Prioritize URLs (one per line)</label>
-        <textarea
-              value={prioritizedUrlsForGodMode.join('\n')}
-              onChange={(e) => setPrioritizedUrlsForGodMode(e.target.value.split('\n').map((url: string) => url.trim()).filter(Boolean))}
-              placeholder="https://example.com/page1\nhttps://example.com/page2"
-              style={{
-                width: '100%',
-                minHeight: '80px',
-                background: '#1e293b',
-                border: '1px solid #334155',
-                borderRadius: '6px',
-                padding: '0.5rem',
-                color: '#e2e8f0',
-                fontSize: '0.75rem',
-                fontFamily: 'monospace',
-                resize: 'vertical'
-              }}
-            />
-          </div>
-        </div>
-        {prioritizedUrlsForGodMode.length > 0 && (
-          <div style={{marginTop: '0.5rem', fontSize: '0.75rem'}}>
-            <span style={{color: '#ff59eb'}}>[{prioritizedUrlsForGodMode.length}] prioritized {prioritizedUrlsForGodMode.length === 1 ? 'URL' : 'URLs'}</span>
-          </div>
-        )}
-
 
                                                     <div style={{marginTop: '0.75rem', padding: '0.75rem', background: '#1e293b', borderRadius: '6px', fontSize: '0.75rem', color: '#94A3B8'}}>
                                                         ℹ️ GOD MODE will skip optimizing these URLs and categories. Changes take effect immediately.
