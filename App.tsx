@@ -19,10 +19,6 @@ import { fetchWithProxies, smartCrawl } from './contentUtils';
 import { listNeuronProjects, NeuronProject } from './neuronwriter';
 // @ts-ignore
 import mermaid from 'mermaid';
-import IntegrationBridge from './src/INTEGRATION_BRIDGE';
-import { FrontendEnhancements } from './src/FRONTEND_ENHANCEMENTS';
-import AdvancedOptimization from './src/ADVANCED_OPTIMIZATION';
-
 console.log("🚀 SOTA ENGINE V2.6 - BULK PLANNER RESTORED");
 
 interface ErrorBoundaryProps {
@@ -1283,12 +1279,6 @@ const App = () => {
                 />
             
         
-                  {/* New Integration Modules */}
-          <div style={{ marginTop: '30px', padding: '20px', border: '2px solid #00ff00', borderRadius: '8px' }}>
-            <h2 style={{ color: '#00ff00' }}>🚀 Integration Bridge & Advanced Optimization</h2>
-            <FrontendEnhancements context={{ sota: {}, godMode: {}, advanced: {}, timestamp: Date.now(), sessionId: 'session-' + Date.now() }} />
-          </div>)}
-        </div>
     );
 };
 
