@@ -135,9 +135,13 @@ const App = () => {
     const [wpDiagnostics, setWpDiagnostics] = useState<any>(null);
     const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
 
-        mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose', fontFamily: 'Inter' }); }, []);
-        if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500); }, [selectedItemForReview]);
-    152
+useEffect(() => {
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose', fontFamily: 'Inter' });
+  }, []);
+
+  useEffect(() => {
+    if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500);
+  }, [selectedItemForReview])
         localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
     useEffect(() => { localStorage.setItem('selectedModel', selectedModel); }, [selectedModel]);
     useEffect(() => { localStorage.setItem('selectedGroqModel', selectedGroqModel); }, [selectedGroqModel]);
