@@ -19,6 +19,7 @@ import { fetchWithProxies, smartCrawl } from './contentUtils';
 import { listNeuronProjects, NeuronProject } from './neuronwriter';
 // @ts-ignore
 import mermaid from 'mermaid';
+
 console.log("🚀 SOTA ENGINE V2.6 - BULK PLANNER RESTORED");
 
 interface ErrorBoundaryProps {
@@ -1277,9 +1278,10 @@ const App = () => {
                     onClose={() => setViewingAnalysis(null)} 
                     onPlanRewrite={handlePlanRewrite} 
                 />
-            
-        
+            )}
+        </div>
     );
 };
 
 export default App;
+
