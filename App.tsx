@@ -153,7 +153,7 @@ useEffect(() => {
     useEffect(() => { localStorage.setItem('siteInfo', JSON.stringify(siteInfo)); }, [siteInfo]);
     useEffect(() => { localStorage.setItem('neuronConfig', JSON.stringify(neuronConfig)); }, [neuronConfig]);
 useEffect(() => { localStorage.setItem('excludedUrls', JSON.stringify(excludedUrls)); }, [excludedUrls]);                                           ', JSON.stringify(excludedUrls)); }, [excludedUrls]);
- useEffect(() => { localStorage.setItem('prioritizedUrlsForGodMode', JSON.stringify(prioritizedUrlsForGodMode)); }, [prioritizedUrlsForGodMode]);
+   useEffect(() => { localStorage.setItem('excludedUrls', JSON.stringify(excludedUrls)); }, [excludedUrls]);
     useEffect(() => { localStorage.setItem('excludedCategories', JSON.stringify(excludedCategories)); }, [excludedCategories]);
 
     const fetchProjectsRef = useRef<string>('');
