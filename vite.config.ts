@@ -28,6 +28,8 @@ export default defineConfig(({ mode }) => {
         target: 'esnext',
         assetsDir: 'assets',
         sourcemap: false,
+        // Use terser for better compression, fallback to esbuild
+        minify: 'terser',
         rollupOptions: {
           output: {
             manualChunks: undefined,
@@ -41,7 +43,6 @@ export default defineConfig(({ mode }) => {
             warn(warning);
           }
         },
-        minify: 'terser',
         terserOptions: {
           compress: {
             drop_console: true,
