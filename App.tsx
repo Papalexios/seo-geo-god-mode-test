@@ -126,7 +126,9 @@ const App = () => {
     const [isBulkAutoPublishing, setIsBulkAutoPublishing] = useState(false);
     const [bulkAutoPublishProgress, setBulkAutoPublishProgress] = useState({ current: 0, total: 0 });
     const [bulkPublishLogs, setBulkPublishLogs] = useState<string[]>([]);
-    const [isGodMode, setIsGodMode] = useState(() => localStorage.getItem('sota_god_mode') === 'true');
+    110
+        , setIsGodMode] = useState(() => localStorage.getItem('sota_god_mode') === 'true');
+     const [prioritizedUrlsForGodMode, setPrioritizedUrlsForGodMode] = useState<string[]>(() => JSON.parse(localStorage.getItem('prioritizedUrlsForGodMode') || '[]'));
     const [godModeLogs, setGodModeLogs] = useState<string[]>([]);
     const [excludedUrls, setExcludedUrls] = useState<string[]>(() => JSON.parse(localStorage.getItem('excludedUrls') || '[]'));
     const [excludedCategories, setExcludedCategories] = useState<string[]>(() => JSON.parse(localStorage.getItem('excludedCategories') || '[]'));
@@ -134,9 +136,12 @@ const App = () => {
     const [wpDiagnostics, setWpDiagnostics] = useState<any>(null);
     const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
 
-    useEffect(() => { mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose', fontFamily: 'Inter' }); }, []);
-    useEffect(() => { if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500); }, [selectedItemForReview]);
-    useEffect(() => { localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
+    799
+        mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose', fontFamily: 'Inter' }); }, []);
+    799
+        if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500); }, [selectedItemForReview]);
+    152
+        localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
     useEffect(() => { localStorage.setItem('selectedModel', selectedModel); }, [selectedModel]);
     useEffect(() => { localStorage.setItem('selectedGroqModel', selectedGroqModel); }, [selectedGroqModel]);
     useEffect(() => { localStorage.setItem('wpConfig', JSON.stringify(wpConfig)); }, [wpConfig]);
@@ -145,6 +150,7 @@ const App = () => {
     useEffect(() => { localStorage.setItem('siteInfo', JSON.stringify(siteInfo)); }, [siteInfo]);
     useEffect(() => { localStorage.setItem('neuronConfig', JSON.stringify(neuronConfig)); }, [neuronConfig]);
     useEffect(() => { localStorage.setItem('excludedUrls', JSON.stringify(excludedUrls)); }, [excludedUrls]);
+ useEffect(() => { localStorage.setItem('prioritizedUrlsForGodMode', JSON.stringify(prioritizedUrlsForGodMode)); }, [prioritizedUrlsForGodMode]);
     useEffect(() => { localStorage.setItem('excludedCategories', JSON.stringify(excludedCategories)); }, [excludedCategories]);
 
     const fetchProjectsRef = useRef<string>('');
