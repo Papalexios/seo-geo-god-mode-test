@@ -2,3 +2,7 @@ name = "seo-geo-god-mode"
 compatibility_date = "2025-01-15"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
+
+# Override default npm ci with npm install to handle lockfile sync
+[build]
+command = "npm install && npm run build"
