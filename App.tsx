@@ -130,6 +130,7 @@ const App = () => {
      const [prioritizedUrlsForGodMode, setPrioritizedUrlsForGodMode] = useState<string[]>(() => JSON.parse(localStorage.getItem('prioritizedUrlsForGodMode') || '[]'));
     const [godModeLogs, setGodModeLogs] = useState<string[]>([]);
     const [excludedUrls, setExcludedUrls] = useState<string[]>(() => JSON.parse(localStorage.getItem('excludedUrls') || '[]'));
+      const [prioritizedUrlsForGodMode, setPrioritizedUrlsForGodMode] = useState<string []>(() => JSON.parse(localStorage.getItem('prioritizedUrlsForGodMode') || '[]'));
     const [optimizedHistory, setOptimizedHistory] = useState<OptimizedLog[]>([]);
     const [wpDiagnostics, setWpDiagnostics] = useState<any>(null);
     const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
@@ -152,7 +153,8 @@ useEffect(() => {
     useEffect(() => { localStorage.setItem('geoTargeting', JSON.stringify(geoTargeting)); }, [geoTargeting]);
     useEffect(() => { localStorage.setItem('siteInfo', JSON.stringify(siteInfo)); }, [siteInfo]);
     useEffect(() => { localStorage.setItem('neuronConfig', JSON.stringify(neuronConfig)); }, [neuronConfig]);
-    useEffect(() => { localStorage.setItem('excludedUrls', JSON.stringify(excludedUrls)); }, [excludedUrls]);
+    useEffect(() => { localStorage.setItem('132
+                                           ', JSON.stringify(excludedUrls)); }, [excludedUrls]);
  useEffect(() => { localStorage.setItem('prioritizedUrlsForGodMode', JSON.stringify(prioritizedUrlsForGodMode)); }, [prioritizedUrlsForGodMode]);
     useEffect(() => { localStorage.setItem('excludedCategories', JSON.stringify(excludedCategories)); }, [excludedCategories]);
 
