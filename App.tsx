@@ -126,8 +126,7 @@ const App = () => {
     const [isBulkAutoPublishing, setIsBulkAutoPublishing] = useState(false);
     const [bulkAutoPublishProgress, setBulkAutoPublishProgress] = useState({ current: 0, total: 0 });
     const [bulkPublishLogs, setBulkPublishLogs] = useState<string[]>([]);
-    110
-        , setIsGodMode] = useState(() => localStorage.getItem('sota_god_mode') === 'true');
+            const [isGodMode, setIsGodMode] = useState(() => localStorage.getItem('sota_god_mode') === 'true');
      const [prioritizedUrlsForGodMode, setPrioritizedUrlsForGodMode] = useState<string[]>(() => JSON.parse(localStorage.getItem('prioritizedUrlsForGodMode') || '[]'));
     const [godModeLogs, setGodModeLogs] = useState<string[]>([]);
     const [excludedUrls, setExcludedUrls] = useState<string[]>(() => JSON.parse(localStorage.getItem('excludedUrls') || '[]'));
