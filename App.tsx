@@ -141,8 +141,6 @@ useEffect(() => {
 
   useEffect(() => {
     if (selectedItemForReview?.generatedContent) setTimeout(() => { mermaid.run({ nodes: document.querySelectorAll('.mermaid') as any }); }, 500);
-  }, [selectedItemForReview])
-        localStorage.setItem('apiKeys', JSON.stringify(apiKeys)); }, [apiKeys]);
   }, [selectedItemForReview]);
 
   useEffect(() => {
