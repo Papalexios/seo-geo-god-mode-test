@@ -35,4 +35,17 @@ build
 
 # Cloudflare
 .wrangler
-wrangler.toml
+
+# Legacy files (not needed for build)
+src/REFERENCE_VALIDATOR.ts
+src/SOTA_ENHANCEMENTS_2_THROUGH_10_COMPLETE.ts
+src/schemaEnhancementService.ts
+src/**/GOD_MODE*.ts
+src/**/SOTA*.ts
+src/**/SOTA*.tsx
+src/**/SOTA*.md
+src/**/*_COMPLETE.ts
+src/**/*_ACTIVATION*.ts
+src/**/*_ENHANCEMENTS*.ts
+src/**/*_INTEGRATION*.ts
+src/**/*_GUIDE*.md

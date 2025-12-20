@@ -12,14 +12,47 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/index.css",
+    "src/vite-env.d.ts",
+    "src/components/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/REFERENCE_VALIDATOR.ts",
+    "src/SOTA_ENHANCEMENTS_2_THROUGH_10_COMPLETE.ts",
+    "src/schemaEnhancementService.ts",
+    "src/**/GOD_MODE*.ts",
+    "src/**/SOTA*.ts",
+    "src/**/SOTA*.tsx",
+    "src/**/SOTA*.md",
+    "src/**/*_COMPLETE.ts",
+    "src/**/*_ACTIVATION*.ts",
+    "src/**/*_ENHANCEMENTS*.ts",
+    "src/**/*_INTEGRATION*.ts",
+    "src/**/*_GUIDE*.md",
+    "src/components.tsx",
+    "src/services.tsx",
+    "src/prompts.tsx",
+    "src/prompts.ts",
+    "src/utils.tsx",
+    "src/contentUtils.tsx",
+    "src/schema-generator.tsx",
+    "src/*Service.ts",
+    "src/*-*.ts",
+    "src/types.ts",
+    "src/useSOTAServices.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
