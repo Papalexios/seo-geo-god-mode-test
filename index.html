@@ -4,107 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- ULTRA-SOTA: SEO Meta Tags -->
-    <meta name="description" content="Ultra-SOTA WordPress Content Generator - AI-powered content creation with advanced SEO optimization, geo-targeting, and NeuronWriter integration" />
-    <meta name="keywords" content="wordpress, content generator, SEO, AI content, geo-targeting, NeuronWriter, content optimization" />
-    <meta name="author" content="Ultra-SOTA Development Team" />
-    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Ultra-SOTA WordPress Content Generator - AI-powered SEO-optimized content creation at unprecedented speed and quality" />
+    <meta name="keywords" content="WordPress, Content Generator, SEO, AI, Content Creation, Geo-targeting" />
+    <meta name="author" content="Ultra-SOTA" />
+    <meta name="theme-color" content="#a855f7" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Ultra-SOTA WordPress Content Generator" />
-    <meta property="og:description" content="AI-powered content creation with advanced SEO optimization" />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:title" content="Ultra-SOTA WP Content Generator" />
+    <meta property="og:description" content="Generate SEO-optimized, geo-targeted WordPress content at unprecedented speed" />
     
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ultra-SOTA WordPress Content Generator" />
-    <meta name="twitter:description" content="AI-powered content creation with advanced SEO optimization" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Ultra-SOTA WP Content Generator" />
+    <meta property="twitter:description" content="Generate SEO-optimized, geo-targeted WordPress content at unprecedented speed" />
     
-    <!-- Performance Hints -->
+    <title>Ultra-SOTA WP Content Generator | AI-Powered SEO Content</title>
+    
+    <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#667eea" />
-    
-    <title>Ultra-SOTA WordPress Content Generator</title>
-    
-    <!-- Critical CSS for initial paint -->
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-      }
-      
-      #root {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* Loading animation */
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      
-      /* Initial loading screen */
-      .initial-loader {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        color: white;
-        text-align: center;
-        padding: 20px;
-      }
-      
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        border-top-color: white;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-bottom: 20px;
-      }
-    </style>
+    <!-- Performance optimization -->
+    <link rel="dns-prefetch" href="https://api.openai.com" />
+    <link rel="dns-prefetch" href="https://api.anthropic.com" />
   </head>
   <body>
-    <div id="root">
-      <!-- Initial loading screen (replaced by React) -->
-      <div class="initial-loader">
-        <div class="spinner"></div>
-        <h2>Loading Ultra-SOTA Content Generator...</h2>
-        <p style="margin-top: 10px; opacity: 0.9;">Initializing AI-powered WordPress optimization</p>
-      </div>
-    </div>
-    
-    <!-- CRITICAL: Updated entry point to src/main.tsx -->
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Fallback for browsers without JavaScript -->
-    <noscript>
-      <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #f5576c; color: white; text-align: center; padding: 20px;">
-        <div>
-          <h1>⚠️ JavaScript Required</h1>
-          <p>This application requires JavaScript to run. Please enable JavaScript in your browser.</p>
-        </div>
-      </div>
-    </noscript>
   </body>
 </html>
