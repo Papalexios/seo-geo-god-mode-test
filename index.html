@@ -3,58 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WP Content Optimizer Pro</title>
+    <meta name="description" content="State-of-the-art WordPress content optimization tool with AI-powered generation">
+    <meta name="theme-color" content="#1e2327">
+    
+    <title>WP Content Optimizer Pro - AI-Powered Content Generation</title>
+    
+    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css" rel="stylesheet">
+    <link rel="preconnect" href="https://unpkg.com">
+    
+    <!-- Google Fonts - Optimized loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Quill Editor CSS -->
+    <link href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css" rel="stylesheet"></noscript>
+    
+    <!-- Critical CSS - Loaded inline for faster initial render -->
     <style>
         /* 
         ================================================================
-        PROJECT SINGULARITY UI v7.5 - ULTRA PREMIUM SOTA EDITION
+        SOTA UI FRAMEWORK v12.0 - ULTRA PREMIUM EDITION
         ================================================================
         */
 
         :root {
-            /* Core Palette - Deep Space */
+            /* Core Palette */
             --bg-deep: #020203;
             --bg-surface: #08080A;
             --bg-glass: rgba(12, 12, 16, 0.7);
             --bg-glass-heavy: rgba(5, 5, 8, 0.9);
             
-            /* Borders & Separators - Ultra Thin */
+            /* Borders */
             --border-subtle: rgba(255, 255, 255, 0.04);
             --border-highlight: rgba(255, 255, 255, 0.08);
             --border-active: rgba(59, 130, 246, 0.3);
             
-            /* Typography - SOTA Hierarchy */
+            /* Typography */
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
             --font-heading: 'Montserrat', sans-serif;
             --font-content: 'Lato', serif;
             
-            /* Accents - Neon & Cyber */
-            --accent-primary: #3B82F6; /* Electric Blue */
+            /* Accents */
+            --accent-primary: #3B82F6;
             --accent-primary-dim: rgba(59, 130, 246, 0.1);
-            --accent-secondary: #8B5CF6; /* Neon Purple */
-            --accent-success: #059669; /* Emerald */
-            --accent-warning: #D97706; /* Amber */
-            --accent-danger: #DC2626; /* Red */
+            --accent-secondary: #8B5CF6;
+            --accent-success: #059669;
+            --accent-warning: #D97706;
+            --accent-danger: #DC2626;
             
-            /* Gradients - Premium Flow */
+            /* Gradients */
             --grad-primary: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #8B5CF6 100%);
             --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%);
-            --grad-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
             
-            /* Shadows & Glows */
+            /* Shadows */
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
             --shadow-lg: 0 20px 50px -12px rgba(0,0,0,0.9);
             --glow-primary: 0 0 20px rgba(59, 130, 246, 0.25);
-            --glow-text: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
-        /* RESET & BASE */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; overflow: hidden; }
+        /* Reset */
+        *, *::before, *::after { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        html, body { 
+            height: 100%; 
+            overflow: hidden; 
+        }
         
         body {
             background-color: var(--bg-deep);
@@ -66,11 +86,16 @@
                 radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        #root { height: 100%; display: flex; flex-direction: column; }
+        #root { 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+        }
         
-        /* Loading State */
+        /* Loading Screen */
         .loading-screen {
             display: flex;
             flex-direction: column;
@@ -78,7 +103,14 @@
             justify-content: center;
             height: 100vh;
             background: var(--bg-deep);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
         }
+        
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -87,16 +119,66 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
         .loading-text {
             margin-top: 1.5rem;
             color: #94A3B8;
             font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
         }
         
-        /* CUSTOM SCROLLBAR */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Error Screen */
+        .error-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 2rem;
+            text-align: center;
+            background: var(--bg-deep);
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: var(--accent-danger);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .error-message {
+            color: #94A3B8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .error-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--grad-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .error-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-primary);
+        }
+        
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
@@ -104,13 +186,76 @@
     </style>
 </head>
 <body>
+    <!-- App Container -->
     <div id="root">
         <div class="loading-screen">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Loading WP Content Optimizer Pro...</p>
+            <p class="loading-text">Initializing WP Content Optimizer Pro...</p>
         </div>
     </div>
-    <!-- CRITICAL: Updated to use root-level index.tsx -->
+    
+    <!-- Error Fallback (if JavaScript fails to load) -->
+    <noscript>
+        <div class="error-screen">
+            <h1 class="error-title">⚠️ JavaScript Required</h1>
+            <p class="error-message">
+                This application requires JavaScript to run. Please enable JavaScript in your browser settings and refresh the page.
+            </p>
+        </div>
+    </noscript>
+    
+    <!-- Global Error Handler -->
+    <script>
+        // Global error handler for uncaught errors
+        window.addEventListener('error', function(event) {
+            console.error('Global error:', event.error);
+            
+            // If root is still showing loading screen, show error
+            const root = document.getElementById('root');
+            if (root && root.innerHTML.includes('loading-screen')) {
+                root.innerHTML = `
+                    <div class="error-screen">
+                        <h1 class="error-title">🚫 Application Error</h1>
+                        <p class="error-message">
+                            The application failed to load properly. This might be due to a network issue or browser compatibility.
+                        </p>
+                        <button class="error-button" onclick="location.reload()">
+                            Reload Application
+                        </button>
+                        <p style="margin-top: 1rem; font-size: 0.75rem; color: #64748B; font-family: monospace;">
+                            ${event.error ? event.error.message : 'Unknown error'}
+                        </p>
+                    </div>
+                `;
+            }
+        });
+        
+        // Unhandled promise rejection handler
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Unhandled promise rejection:', event.reason);
+        });
+        
+        // Timeout fallback - if app doesn't load in 15 seconds
+        setTimeout(function() {
+            const root = document.getElementById('root');
+            if (root && root.innerHTML.includes('loading-screen')) {
+                console.error('App failed to load within timeout');
+                root.innerHTML = `
+                    <div class="error-screen">
+                        <h1 class="error-title">⏱️ Loading Timeout</h1>
+                        <p class="error-message">
+                            The application is taking longer than expected to load. This might be due to a slow connection or server issue.
+                        </p>
+                        <button class="error-button" onclick="location.reload()">
+                            Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }, 15000);
+    </script>
+    
+    <!-- Main Application Entry Point -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
