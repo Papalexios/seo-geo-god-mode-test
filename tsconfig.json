@@ -22,36 +22,20 @@
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts"
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/vite-env.d.ts",
+    "src/index.css",
+    "src/components/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "src/REFERENCE_VALIDATOR.ts",
-    "src/SOTA_ENHANCEMENTS_2_THROUGH_10_COMPLETE.ts",
-    "src/schemaEnhancementService.ts",
-    "src/**/GOD_MODE*.ts",
-    "src/**/SOTA*.ts",
-    "src/**/SOTA*.tsx",
-    "src/**/SOTA*.md",
-    "src/**/*_COMPLETE.ts",
-    "src/**/*_ACTIVATION*.ts",
-    "src/**/*_ENHANCEMENTS*.ts",
-    "src/**/*_INTEGRATION*.ts",
-    "src/**/*_GUIDE*.md",
-    "src/components.tsx",
-    "src/services.tsx",
-    "src/prompts.tsx",
-    "src/prompts.ts",
-    "src/utils.tsx",
-    "src/contentUtils.tsx",
-    "src/schema-generator.tsx",
-    "src/*Service.ts",
-    "src/*-*.ts",
-    "src/types.ts",
-    "src/useSOTAServices.ts"
+    "src/*.ts",
+    "src/*.tsx",
+    "!src/main.tsx",
+    "!src/App.tsx",
+    "!src/vite-env.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
