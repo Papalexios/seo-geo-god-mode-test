@@ -1,9 +1,8 @@
 // SOTA Server Orchestrator - Production-Grade ULTRA SOTA Orchestration Layer
 // Durable Objects + KV + Cloudflare Workers
 
-import { executeUltraSOTA } from '../ULTRA_SOTA_COMPLETE_EXAMPLE';
-
-export interface SOTAJobRequest {
+// import { executeUltraSOTA } from '../../ULTRA_SOTA_COMPLETE_EXAMPLE';
+// TODO: ULTRA SOTA execution will be called from client or via REST APIexport interface SOTAJobRequest {
   keyword: string;
   existingPages: any[];
   aiClient: any;
