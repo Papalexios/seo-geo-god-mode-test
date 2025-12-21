@@ -1,279 +1,496 @@
-// Elite SEO Analyzer with real algorithms
+// ELITE SEO ANALYSIS with Advanced Algorithms
+import { SerperService } from './SerperService';
 
-export interface EliteSEOMetrics {
+export interface SEOAnalysisResult {
   score: number;
-  tfIdf: number;
-  lsiKeywords: string[];
-  entities: Array<{ text: string; type: string; salience: number }>;
-  topics: string[];
-  eeatScore: number;
-  serpFeatureEligibility: string[];
-  semanticRelevance: number;
-  contentDepth: number;
-  keywordDensity: number;
+  wordCount: number;
   readabilityScore: number;
+  tfIdfScore: number;
+  lsiKeywords: string[];
+  entities: Entity[];
+  topics: string[];
+  eeatSignals: EEATSignals;
+  serpFeatures: SERPFeatureAnalysis;
+  competitorGap: number;
+  issues: Array<{ severity: 'critical' | 'warning' | 'info'; message: string }>;
+  suggestions: Array<{ priority: 'high' | 'medium' | 'low'; action: string }>;
+}
+
+export interface Entity {
+  text: string;
+  type: 'PERSON' | 'ORGANIZATION' | 'LOCATION' | 'PRODUCT' | 'OTHER';
+  relevance: number;
+}
+
+export interface EEATSignals {
+  score: number;
+  hasAuthorBio: boolean;
+  hasCitations: boolean;
+  hasExpertiseIndicators: boolean;
+  hasDatePublished: boolean;
+  hasLastUpdated: boolean;
+  hasContactInfo: boolean;
+  authorityScore: number;
+}
+
+export interface SERPFeatureAnalysis {
+  featuredSnippetEligible: boolean;
+  paaEligible: boolean;
+  hasStructuredData: boolean;
+  schemaTypes: string[];
+  richSnippetPotential: number;
 }
 
 export class EliteSEOAnalyzer {
-  // Calculate TF-IDF (Term Frequency - Inverse Document Frequency)
-  private calculateTFIDF(text: string, keyword: string): number {
-    const words = text.toLowerCase().split(/\s+/);
-    const keywordLower = keyword.toLowerCase();
-    const keywordWords = keywordLower.split(/\s+/);
-    
-    // Term Frequency
-    let termFreq = 0;
-    keywordWords.forEach(kw => {
-      termFreq += words.filter(w => w === kw).length;
-    });
-    const tf = termFreq / words.length;
-    
-    // Simplified IDF (in real implementation, would use corpus)
-    const idf = Math.log(1000 / (1 + termFreq)); // Assume 1000 doc corpus
-    
-    return tf * idf * 100;
+  private serper?: SerperService;
+
+  constructor(serperKey?: string) {
+    if (serperKey) {
+      this.serper = new SerperService(serperKey);
+    }
   }
 
-  // Extract LSI (Latent Semantic Indexing) keywords
-  private findLSIKeywords(text: string, primaryKeyword: string): string[] {
-    const words = text.toLowerCase().match(/\b\w{4,}\b/g) || [];
-    const wordFreq = new Map<string, number>();
-    
-    words.forEach(word => {
-      if (!this.isStopWord(word)) {
-        wordFreq.set(word, (wordFreq.get(word) || 0) + 1);
+  async analyzeURL(url: string, targetKeyword?: string): Promise<SEOAnalysisResult> {
+    try {
+      // Fetch HTML
+      const html = await this.fetchHTML(url);
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // Extract content
+      const content = this.extractContent(doc);
+      const title = doc.querySelector('title')?.textContent || '';
+      
+      // Run all analyses
+      const [tfIdf, lsi, entities, topics, eeat, serpFeatures] = await Promise.all([
+        this.calculateTFIDF(content, targetKeyword || ''),
+        this.findLSIKeywords(content, targetKeyword || ''),
+        this.extractEntities(content),
+        this.extractTopics(content),
+        this.detectEEATSignals(doc),
+        this.analyzeSERPFeatures(doc)
+      ]);
+
+      // Calculate scores
+      const wordCount = content.split(/\s+/).length;
+      const readabilityScore = this.calculateReadability(content);
+      
+      // Get competitor gap if Serper available
+      let competitorGap = 0;
+      if (this.serper && targetKeyword) {
+        competitorGap = await this.calculateCompetitorGap(url, targetKeyword, wordCount);
       }
-    });
+
+      // Generate issues and suggestions
+      const issues = this.identifyIssues(doc, content, wordCount, eeat, serpFeatures);
+      const suggestions = this.generateSuggestions(issues, tfIdf, lsi, serpFeatures);
+
+      // Calculate overall score
+      const score = this.calculateOverallScore({
+        wordCount,
+        readabilityScore,
+        tfIdfScore: tfIdf,
+        eeatScore: eeat.score,
+        serpScore: serpFeatures.richSnippetPotential,
+        issueCount: issues.filter(i => i.severity === 'critical').length
+      });
+
+      return {
+        score,
+        wordCount,
+        readabilityScore,
+        tfIdfScore: tfIdf,
+        lsiKeywords: lsi,
+        entities,
+        topics,
+        eeatSignals: eeat,
+        serpFeatures,
+        competitorGap,
+        issues,
+        suggestions
+      };
+    } catch (error) {
+      console.error('SEO Analysis Error:', error);
+      throw error;
+    }
+  }
+
+  private async fetchHTML(url: string): Promise<string> {
+    const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
+    if (!response.ok) throw new Error('Failed to fetch URL');
+    return await response.text();
+  }
+
+  private extractContent(doc: Document): string {
+    // Remove script, style, nav, footer
+    const elementsToRemove = doc.querySelectorAll('script, style, nav, footer, header, aside');
+    elementsToRemove.forEach(el => el.remove());
+
+    // Get main content
+    const main = doc.querySelector('main, article, [role="main"]');
+    return (main?.textContent || doc.body.textContent || '').trim();
+  }
+
+  private calculateTFIDF(content: string, keyword: string): number {
+    if (!keyword) return 0;
+
+    const words = content.toLowerCase().split(/\s+/);
+    const keywordLower = keyword.toLowerCase();
     
-    // Sort by frequency and return top semantically related terms
-    const sorted = Array.from(wordFreq.entries())
+    // Term Frequency
+    const keywordCount = words.filter(w => w.includes(keywordLower)).length;
+    const tf = keywordCount / words.length;
+
+    // Inverse Document Frequency (simplified - assume corpus of 10000 docs)
+    const docsWithKeyword = 100; // Estimate
+    const idf = Math.log(10000 / docsWithKeyword);
+
+    const tfidf = tf * idf;
+    
+    // Normalize to 0-100 scale
+    return Math.min(100, Math.round(tfidf * 1000));
+  }
+
+  private async findLSIKeywords(content: string, keyword: string): Promise<string[]> {
+    // Extract words
+    const words = content.toLowerCase()
+      .split(/\s+/)
+      .filter(w => w.length > 4);
+
+    // Count frequencies
+    const freq = new Map<string, number>();
+    words.forEach(w => freq.set(w, (freq.get(w) || 0) + 1));
+
+    // Get top words (excluding the main keyword)
+    const keywordLower = keyword.toLowerCase();
+    const lsiWords = Array.from(freq.entries())
+      .filter(([word]) => !word.includes(keywordLower) && !this.isStopWord(word))
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 20)
+      .slice(0, 10)
       .map(([word]) => word);
-    
-    return sorted.filter(w => !primaryKeyword.toLowerCase().includes(w));
+
+    return lsiWords;
   }
 
   private isStopWord(word: string): boolean {
-    const stopWords = ['the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'but', 'in', 'with', 'to', 'for', 'of', 'as', 'by', 'that', 'this', 'it', 'from', 'be', 'are', 'was', 'were', 'been', 'have', 'has', 'had'];
-    return stopWords.includes(word.toLowerCase());
+    const stopWords = new Set(['this', 'that', 'these', 'those', 'have', 'been', 'were', 'will', 'would', 'could', 'should', 'there', 'their', 'about', 'which', 'when', 'where', 'what']);
+    return stopWords.has(word);
   }
 
-  // Extract named entities (simplified - in production use NLP library)
-  private extractEntities(text: string): Array<{ text: string; type: string; salience: number }> {
-    const entities: Array<{ text: string; type: string; salience: number }> = [];
+  private extractEntities(content: string): Entity[] {
+    const entities: Entity[] = [];
     
-    // Detect capitalized phrases (potential entities)
-    const capitalizedMatches = text.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b/g) || [];
-    const entityCounts = new Map<string, number>();
-    
-    capitalizedMatches.forEach(entity => {
-      if (entity.length > 2) {
-        entityCounts.set(entity, (entityCounts.get(entity) || 0) + 1);
-      }
-    });
-    
-    // Calculate salience (relative importance)
-    const totalEntities = Array.from(entityCounts.values()).reduce((a, b) => a + b, 0);
-    
-    entityCounts.forEach((count, entity) => {
-      entities.push({
-        text: entity,
-        type: this.guessEntityType(entity),
-        salience: count / totalEntities
-      });
-    });
-    
-    return entities.sort((a, b) => b.salience - a.salience).slice(0, 10);
-  }
-
-  private guessEntityType(entity: string): string {
-    // Simple heuristics - in production use NER model
-    if (/Inc\.|Corp\.|LLC|Ltd/i.test(entity)) return 'ORGANIZATION';
-    if (/\d{4}/.test(entity)) return 'DATE';
-    if (/^[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(entity)) return 'PERSON';
-    return 'CONCEPT';
-  }
-
-  // Topic extraction (simplified LDA)
-  private extractTopics(text: string): string[] {
-    const sentences = text.split(/[.!?]+/);
-    const topics = new Map<string, number>();
+    // Simple NER - capitalized words (proper nouns)
+    const sentences = content.split(/[.!?]+/);
     
     sentences.forEach(sentence => {
-      const words = sentence.toLowerCase().match(/\b\w{5,}\b/g) || [];
-      words.forEach(word => {
-        if (!this.isStopWord(word)) {
-          topics.set(word, (topics.get(word) || 0) + 1);
+      const words = sentence.split(/\s+/);
+      
+      words.forEach((word, i) => {
+        if (word.length > 2 && word[0] === word[0].toUpperCase()) {
+          // Check if it's a person (preceded by title)
+          const prevWord = words[i - 1]?.toLowerCase();
+          let type: Entity['type'] = 'OTHER';
+          
+          if (['dr', 'mr', 'mrs', 'ms', 'prof'].includes(prevWord)) {
+            type = 'PERSON';
+          } else if (word.endsWith('Inc') || word.endsWith('Corp') || word.endsWith('LLC')) {
+            type = 'ORGANIZATION';
+          }
+          
+          entities.push({
+            text: word,
+            type,
+            relevance: 0.8
+          });
         }
       });
     });
-    
-    return Array.from(topics.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([topic]) => topic);
+
+    // Deduplicate
+    const unique = Array.from(new Map(entities.map(e => [e.text, e])).values());
+    return unique.slice(0, 20);
   }
 
-  // E-E-A-T Signal Detection
-  private detectEEATSignals(html: string): number {
-    let score = 0;
-    const text = html.toLowerCase();
+  private extractTopics(content: string): string[] {
+    // Simple topic extraction using frequent noun phrases
+    const words = content.toLowerCase().split(/\s+/);
+    const bigrams = [];
     
-    // Experience indicators
-    if (/\b(we tested|our experience|we found|in our testing|after using)\b/i.test(text)) score += 15;
-    
-    // Expertise indicators
-    if (/\b(expert|phd|doctor|certified|professional|years of experience)\b/i.test(text)) score += 20;
-    if (html.includes('author') && html.includes('bio')) score += 10;
-    
-    // Authority indicators
-    if (/\b(published|research|study|according to|source)\b/i.test(text)) score += 15;
-    const externalLinks = (html.match(/href="http/g) || []).length;
-    score += Math.min(externalLinks * 2, 20);
-    
-    // Trust indicators
-    if (/\b(privacy policy|about us|contact|terms)\b/i.test(text)) score += 10;
-    if (html.includes('https://')) score += 10;
-    
-    return Math.min(score, 100);
-  }
-
-  // SERP Feature Eligibility
-  private analyzeSERPFeatures(html: string): string[] {
-    const features: string[] = [];
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    
-    // Featured Snippet eligibility
-    const paragraphs = doc.querySelectorAll('p');
-    const hasDefinition = Array.from(paragraphs).some(p => 
-      p.textContent && p.textContent.length > 40 && p.textContent.length < 160
-    );
-    if (hasDefinition) features.push('Featured Snippet');
-    
-    // People Also Ask eligibility
-    const headings = Array.from(doc.querySelectorAll('h2, h3'));
-    const hasQuestions = headings.some(h => 
-      h.textContent && /^(what|how|why|when|where|who|which)/i.test(h.textContent)
-    );
-    if (hasQuestions) features.push('People Also Ask');
-    
-    // Schema markup
-    if (html.includes('application/ld+json') || html.includes('schema.org')) {
-      features.push('Rich Results');
+    for (let i = 0; i < words.length - 1; i++) {
+      bigrams.push(`${words[i]} ${words[i + 1]}`);
     }
-    
-    // List eligibility
-    const lists = doc.querySelectorAll('ol, ul');
-    if (lists.length > 2) features.push('List Feature');
-    
-    return features;
+
+    const freq = new Map<string, number>();
+    bigrams.forEach(bg => {
+      if (!this.isStopWord(bg.split(' ')[0]) && !this.isStopWord(bg.split(' ')[1])) {
+        freq.set(bg, (freq.get(bg) || 0) + 1);
+      }
+    });
+
+    return Array.from(freq.entries())
+      .filter(([_, count]) => count >= 3)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([phrase]) => phrase);
   }
 
-  // Semantic relevance (cosine similarity approximation)
-  private calculateSemanticRelevance(text: string, keyword: string): number {
-    const textWords = new Set(text.toLowerCase().match(/\b\w{3,}\b/g) || []);
-    const keywordWords = new Set(keyword.toLowerCase().match(/\b\w{3,}\b/g) || []);
+  private detectEEATSignals(doc: Document): EEATSignals {
+    const html = doc.documentElement.outerHTML.toLowerCase();
     
-    const intersection = new Set([...textWords].filter(x => keywordWords.has(x)));
-    const union = new Set([...textWords, ...keywordWords]);
+    const hasAuthorBio = !!(doc.querySelector('[class*="author"], [class*="bio"]') || html.includes('about the author'));
+    const hasCitations = doc.querySelectorAll('cite, [class*="citation"], [class*="reference"]').length > 0;
+    const hasExpertiseIndicators = html.includes('expert') || html.includes('phd') || html.includes('certified');
+    const hasDatePublished = !!(doc.querySelector('[property="article:published_time"], time, [class*="date"]'));
+    const hasLastUpdated = html.includes('updated') || html.includes('modified');
+    const hasContactInfo = !!(doc.querySelector('[href^="mailto:"], [class*="contact"]'));
     
-    // Jaccard similarity as approximation
-    return (intersection.size / union.size) * 100;
-  }
+    // Calculate authority score
+    let authorityScore = 0;
+    if (hasAuthorBio) authorityScore += 20;
+    if (hasCitations) authorityScore += 20;
+    if (hasExpertiseIndicators) authorityScore += 20;
+    if (hasDatePublished) authorityScore += 15;
+    if (hasLastUpdated) authorityScore += 15;
+    if (hasContactInfo) authorityScore += 10;
 
-  // Content depth analysis
-  private analyzeContentDepth(text: string): number {
-    const words = text.split(/\s+/).length;
-    const sentences = text.split(/[.!?]+/).length;
-    const paragraphs = text.split(/\n\n+/).length;
-    
-    let score = 0;
-    
-    // Word count scoring
-    if (words > 2000) score += 30;
-    else if (words > 1000) score += 20;
-    else if (words > 500) score += 10;
-    
-    // Structural depth
-    if (sentences > 50) score += 20;
-    if (paragraphs > 10) score += 15;
-    
-    // Average sentence length (complexity indicator)
-    const avgSentenceLength = words / sentences;
-    if (avgSentenceLength > 15 && avgSentenceLength < 25) score += 15;
-    
-    // Unique word ratio (vocabulary richness)
-    const uniqueWords = new Set(text.toLowerCase().match(/\b\w+\b/g) || []);
-    const uniqueRatio = uniqueWords.size / words;
-    if (uniqueRatio > 0.5) score += 20;
-    
-    return Math.min(score, 100);
-  }
+    const score = Math.round((authorityScore / 100) * 100);
 
-  // Main analysis function
-  async analyze(html: string, targetKeyword: string): Promise<EliteSEOMetrics> {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const text = doc.body.textContent || '';
-    
-    // Calculate all metrics
-    const tfIdf = this.calculateTFIDF(text, targetKeyword);
-    const lsiKeywords = this.findLSIKeywords(text, targetKeyword);
-    const entities = this.extractEntities(text);
-    const topics = this.extractTopics(text);
-    const eeatScore = this.detectEEATSignals(html);
-    const serpFeatureEligibility = this.analyzeSERPFeatures(html);
-    const semanticRelevance = this.calculateSemanticRelevance(text, targetKeyword);
-    const contentDepth = this.analyzeContentDepth(text);
-    
-    // Keyword density
-    const keywordCount = (text.toLowerCase().match(new RegExp(targetKeyword.toLowerCase(), 'g')) || []).length;
-    const wordCount = text.split(/\s+/).length;
-    const keywordDensity = (keywordCount / wordCount) * 100;
-    
-    // Readability (Flesch Reading Ease)
-    const sentences = text.split(/[.!?]+/).length;
-    const syllables = this.countSyllables(text);
-    const readabilityScore = 206.835 - 1.015 * (wordCount / sentences) - 84.6 * (syllables / wordCount);
-    
-    // Calculate overall score
-    const score = Math.round(
-      tfIdf * 0.15 +
-      eeatScore * 0.20 +
-      semanticRelevance * 0.15 +
-      contentDepth * 0.20 +
-      (serpFeatureEligibility.length * 5) * 0.10 +
-      Math.min(readabilityScore, 100) * 0.10 +
-      Math.min(keywordDensity * 20, 100) * 0.10
-    );
-    
     return {
-      score: Math.min(score, 100),
-      tfIdf,
-      lsiKeywords,
-      entities,
-      topics,
-      eeatScore,
-      serpFeatureEligibility,
-      semanticRelevance,
-      contentDepth,
-      keywordDensity,
-      readabilityScore: Math.max(0, Math.min(readabilityScore, 100))
+      score,
+      hasAuthorBio,
+      hasCitations,
+      hasExpertiseIndicators,
+      hasDatePublished,
+      hasLastUpdated,
+      hasContactInfo,
+      authorityScore
     };
   }
 
-  private countSyllables(text: string): number {
-    const words = text.toLowerCase().match(/\b\w+\b/g) || [];
-    let count = 0;
+  private analyzeSERPFeatures(doc: Document): SERPFeatureAnalysis {
+    const html = doc.documentElement.outerHTML;
     
-    words.forEach(word => {
-      // Simplified syllable counting
-      const vowels = word.match(/[aeiouy]+/g) || [];
-      count += vowels.length;
-      if (word.endsWith('e')) count--;
-      if (count === 0) count = 1;
+    // Check for structured data
+    const scripts = Array.from(doc.querySelectorAll('script[type="application/ld+json"]'));
+    const schemaTypes: string[] = [];
+    
+    scripts.forEach(script => {
+      try {
+        const schema = JSON.parse(script.textContent || '');
+        if (schema['@type']) schemaTypes.push(schema['@type']);
+      } catch (e) {}
     });
+
+    const hasStructuredData = schemaTypes.length > 0;
     
-    return count;
+    // Featured snippet eligibility
+    const hasDefinitionParagraph = !!doc.querySelector('p');
+    const hasLists = doc.querySelectorAll('ul, ol').length > 0;
+    const hasTables = doc.querySelectorAll('table').length > 0;
+    const featuredSnippetEligible = hasDefinitionParagraph && (hasLists || hasTables);
+    
+    // PAA eligibility
+    const hasFAQ = html.toLowerCase().includes('frequently asked') || html.includes('FAQ');
+    const hasQuestions = (html.match(/\?/g) || []).length > 5;
+    const paaEligible = hasFAQ || hasQuestions;
+    
+    // Rich snippet potential
+    let richSnippetPotential = 0;
+    if (hasStructuredData) richSnippetPotential += 40;
+    if (featuredSnippetEligible) richSnippetPotential += 30;
+    if (paaEligible) richSnippetPotential += 30;
+
+    return {
+      featuredSnippetEligible,
+      paaEligible,
+      hasStructuredData,
+      schemaTypes,
+      richSnippetPotential: Math.min(100, richSnippetPotential)
+    };
+  }
+
+  private calculateReadability(content: string): number {
+    const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
+    const words = content.split(/\s+/);
+    const syllables = words.reduce((sum, word) => sum + this.countSyllables(word), 0);
+
+    if (sentences.length === 0 || words.length === 0) return 0;
+
+    // Flesch Reading Ease
+    const avgWordsPerSentence = words.length / sentences.length;
+    const avgSyllablesPerWord = syllables / words.length;
+    
+    const flesch = 206.835 - (1.015 * avgWordsPerSentence) - (84.6 * avgSyllablesPerWord);
+    
+    return Math.max(0, Math.min(100, Math.round(flesch)));
+  }
+
+  private countSyllables(word: string): number {
+    word = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (word.length <= 3) return 1;
+    
+    const vowels = 'aeiouy';
+    let syllableCount = 0;
+    let previousWasVowel = false;
+    
+    for (let i = 0; i < word.length; i++) {
+      const isVowel = vowels.includes(word[i]);
+      if (isVowel && !previousWasVowel) {
+        syllableCount++;
+      }
+      previousWasVowel = isVowel;
+    }
+    
+    if (word.endsWith('e')) syllableCount--;
+    return Math.max(1, syllableCount);
+  }
+
+  private async calculateCompetitorGap(
+    url: string,
+    keyword: string,
+    yourWordCount: number
+  ): Promise<number> {
+    try {
+      if (!this.serper) return 0;
+
+      const results = await this.serper.search(keyword, 10);
+      const competitors = results.filter(r => !r.link.includes(new URL(url).hostname));
+      
+      // Estimate competitor word counts (avg ~1500)
+      const avgCompetitorWordCount = 1500;
+      
+      // Your advantage/disadvantage
+      const gap = ((yourWordCount - avgCompetitorWordCount) / avgCompetitorWordCount) * 100;
+      
+      return Math.round(gap);
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  private identifyIssues(
+    doc: Document,
+    content: string,
+    wordCount: number,
+    eeat: EEATSignals,
+    serp: SERPFeatureAnalysis
+  ): Array<{ severity: 'critical' | 'warning' | 'info'; message: string }> {
+    const issues: Array<{ severity: 'critical' | 'warning' | 'info'; message: string }> = [];
+
+    // Title issues
+    const title = doc.querySelector('title')?.textContent || '';
+    if (!title) issues.push({ severity: 'critical', message: 'Missing title tag' });
+    else if (title.length < 30) issues.push({ severity: 'warning', message: 'Title too short (< 30 chars)' });
+    else if (title.length > 60) issues.push({ severity: 'warning', message: 'Title too long (> 60 chars)' });
+
+    // Meta description
+    const meta = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+    if (!meta) issues.push({ severity: 'critical', message: 'Missing meta description' });
+    else if (meta.length < 120) issues.push({ severity: 'warning', message: 'Meta description too short' });
+
+    // Word count
+    if (wordCount < 300) issues.push({ severity: 'critical', message: 'Content too thin (< 300 words)' });
+    else if (wordCount < 600) issues.push({ severity: 'warning', message: 'Content could be more comprehensive' });
+
+    // Headings
+    const h1Count = doc.querySelectorAll('h1').length;
+    if (h1Count === 0) issues.push({ severity: 'critical', message: 'Missing H1 tag' });
+    else if (h1Count > 1) issues.push({ severity: 'warning', message: 'Multiple H1 tags detected' });
+
+    // Images
+    const images = doc.querySelectorAll('img');
+    const imagesWithoutAlt = Array.from(images).filter(img => !img.getAttribute('alt')).length;
+    if (imagesWithoutAlt > 0) {
+      issues.push({ severity: 'warning', message: `${imagesWithoutAlt} images missing alt text` });
+    }
+
+    // E-E-A-T
+    if (!eeat.hasAuthorBio) issues.push({ severity: 'info', message: 'No author bio detected' });
+    if (!eeat.hasDatePublished) issues.push({ severity: 'info', message: 'No publish date detected' });
+
+    // SERP Features
+    if (!serp.hasStructuredData) issues.push({ severity: 'warning', message: 'Missing structured data (schema)' });
+    if (!serp.paaEligible) issues.push({ severity: 'info', message: 'Add FAQ section for People Also Ask' });
+
+    return issues;
+  }
+
+  private generateSuggestions(
+    issues: Array<{ severity: string; message: string }>,
+    tfIdf: number,
+    lsi: string[],
+    serp: SERPFeatureAnalysis
+  ): Array<{ priority: 'high' | 'medium' | 'low'; action: string }> {
+    const suggestions: Array<{ priority: 'high' | 'medium' | 'low'; action: string }> = [];
+
+    // Critical issues = high priority
+    issues.filter(i => i.severity === 'critical').forEach(issue => {
+      suggestions.push({ priority: 'high', action: issue.message });
+    });
+
+    // Keyword optimization
+    if (tfIdf < 30) {
+      suggestions.push({ priority: 'high', action: 'Increase keyword density (currently low)' });
+    }
+
+    // LSI keywords
+    if (lsi.length > 0) {
+      suggestions.push({
+        priority: 'medium',
+        action: `Include LSI keywords: ${lsi.slice(0, 5).join(', ')}`
+      });
+    }
+
+    // SERP features
+    if (!serp.featuredSnippetEligible) {
+      suggestions.push({
+        priority: 'medium',
+        action: 'Add concise definition paragraph for featured snippet'
+      });
+    }
+
+    if (!serp.paaEligible) {
+      suggestions.push({
+        priority: 'low',
+        action: 'Add FAQ section to target People Also Ask'
+      });
+    }
+
+    return suggestions;
+  }
+
+  private calculateOverallScore(metrics: {
+    wordCount: number;
+    readabilityScore: number;
+    tfIdfScore: number;
+    eeatScore: number;
+    serpScore: number;
+    issueCount: number;
+  }): number {
+    let score = 0;
+
+    // Word count (20 points)
+    if (metrics.wordCount >= 2000) score += 20;
+    else if (metrics.wordCount >= 1000) score += 15;
+    else if (metrics.wordCount >= 500) score += 10;
+    else score += 5;
+
+    // Readability (20 points)
+    score += (metrics.readabilityScore / 100) * 20;
+
+    // TF-IDF (15 points)
+    score += (metrics.tfIdfScore / 100) * 15;
+
+    // E-E-A-T (20 points)
+    score += (metrics.eeatScore / 100) * 20;
+
+    // SERP Features (15 points)
+    score += (metrics.serpScore / 100) * 15;
+
+    // Deduct for critical issues (10 points max)
+    score -= metrics.issueCount * 5;
+
+    return Math.max(0, Math.min(100, Math.round(score)));
   }
 }
