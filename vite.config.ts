@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
       },
       plugins: [react()],
-      base: './', // CRITICAL: Use relative paths for Cloudflare Pages
+      base: '/', // FIXED: Use absolute path for Cloudflare Pages
       resolve: {
         alias: {
           buffer: 'buffer/',
@@ -28,11 +28,24 @@ export default defineConfig(({ mode }) => {
         target: 'esnext',
         assetsDir: 'assets',
         sourcemap: false,
-        // Use terser for better compression, fallback to esbuild
         minify: 'terser',
         rollupOptions: {
           output: {
-            manualChunks: undefined,
+            manualChunks: (id) => {
+              // Split large dependencies into separate chunks
+              if (id.includes('node_modules')) {
+                if (id.includes('react') || id.includes('react-dom')) {
+                  return 'vendor-react';
+                }
+                if (id.includes('@google/genai') || id.includes('openai') || id.includes('@anthropic-ai')) {
+                  return 'vendor-ai';
+                }
+                if (id.includes('mermaid')) {
+                  return 'vendor-mermaid';
+                }
+                return 'vendor';
+              }
+            },
             assetFileNames: 'assets/[name].[hash][extname]',
             chunkFileNames: 'assets/[name].[hash].js',
             entryFileNames: 'assets/[name].[hash].js',
@@ -46,12 +59,20 @@ export default defineConfig(({ mode }) => {
         terserOptions: {
           compress: {
             drop_console: true,
-            drop_debugger: true
+            drop_debugger: true,
+            pure_funcs: ['console.log', 'console.info', 'console.debug']
+          },
+          format: {
+            comments: false
           }
-        }
+        },
+        chunkSizeWarningLimit: 1000,
       },
       optimizeDeps: {
-        include: ['mermaid', 'buffer', 'react', 'react-dom']
+        include: ['mermaid', 'buffer', 'react', 'react-dom'],
+        esbuildOptions: {
+          target: 'esnext'
+        }
       }
     };
 });
