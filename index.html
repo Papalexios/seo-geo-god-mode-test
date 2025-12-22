@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WP Content Optimizer Pro</title>
+    <title>WP Content Optimizer Pro - Ultra SOTA Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,7 +11,8 @@
     <style>
         /* 
         ================================================================
-        PROJECT SINGULARITY UI v7.5 - ULTRA PREMIUM SOTA EDITION
+        ULTRA SOTA UI REVOLUTION v13.1 - ENTERPRISE GRADE
+        1000x More Beautiful | Hyper Engaging | Production Ready
         ================================================================
         */
 
@@ -22,34 +23,33 @@
             --bg-glass: rgba(12, 12, 16, 0.7);
             --bg-glass-heavy: rgba(5, 5, 8, 0.9);
             
-            /* Borders & Separators - Ultra Thin */
+            /* Borders & Separators */
             --border-subtle: rgba(255, 255, 255, 0.04);
             --border-highlight: rgba(255, 255, 255, 0.08);
             --border-active: rgba(59, 130, 246, 0.3);
             
-            /* Typography - SOTA Hierarchy */
+            /* Typography */
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
             --font-heading: 'Montserrat', sans-serif;
             --font-content: 'Lato', serif;
             
-            /* Accents - Neon & Cyber */
-            --accent-primary: #3B82F6; /* Electric Blue */
+            /* Accents */
+            --accent-primary: #3B82F6;
             --accent-primary-dim: rgba(59, 130, 246, 0.1);
-            --accent-secondary: #8B5CF6; /* Neon Purple */
-            --accent-success: #059669; /* Emerald */
-            --accent-warning: #D97706; /* Amber */
-            --accent-danger: #DC2626; /* Red */
+            --accent-secondary: #8B5CF6;
+            --accent-success: #10B981;
+            --accent-warning: #F59E0B;
+            --accent-danger: #EF4444;
             
-            /* Gradients - Premium Flow */
+            /* Gradients */
             --grad-primary: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #8B5CF6 100%);
             --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%);
             --grad-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
             
-            /* Shadows & Glows */
+            /* Shadows */
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
             --shadow-lg: 0 20px 50px -12px rgba(0,0,0,0.9);
             --glow-primary: 0 0 20px rgba(59, 130, 246, 0.25);
-            --glow-text: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         /* RESET & BASE */
@@ -70,7 +70,300 @@
         
         #root { height: 100%; display: flex; flex-direction: column; }
         
-        /* Loading State */
+        /* ================================================================
+           ULTRA SOTA ANIMATIONS - ENTERPRISE GRADE
+           ================================================================ */
+        
+        @keyframes sota-gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes sota-pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(59, 130, 246, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(59, 130, 246, 0.4); }
+        }
+
+        @keyframes sota-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes sota-shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes sota-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        @keyframes sota-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ================================================================
+           ULTRA SOTA BANNER - ANIMATED GRADIENT
+           ================================================================ */
+        
+        .ultra-sota-banner {
+            position: relative;
+            background: linear-gradient(-45deg, #10B981, #3B82F6, #8B5CF6, #EC4899);
+            background-size: 400% 400%;
+            animation: sota-gradient-shift 15s ease infinite;
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6) 1;
+            padding: 2rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .ultra-sota-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+            animation: sota-pulse-glow 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .ultra-sota-banner-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .ultra-sota-icon {
+            font-size: 2rem;
+            animation: sota-float 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .ultra-sota-title {
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+        }
+
+        .ultra-sota-subtitle {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .ultra-sota-feature-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .ultra-sota-feature-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ================================================================
+           GLASSMORPHISM CARDS - 3D DEPTH
+           ================================================================ */
+        
+        .ultra-sota-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .ultra-sota-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ultra-sota-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .ultra-sota-card:hover::before {
+            left: 100%;
+        }
+
+        /* ================================================================
+           STATUS INDICATORS - ANIMATED
+           ================================================================ */
+        
+        .ultra-sota-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .ultra-sota-status.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 78, 59, 0.3));
+            border: 1px solid #10B981;
+            color: #10B981;
+            animation: sota-pulse-glow 2s ease-in-out infinite;
+        }
+
+        .ultra-sota-status.processing {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(29, 78, 216, 0.3));
+            border: 1px solid #3B82F6;
+            color: #60A5FA;
+        }
+
+        .ultra-sota-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: sota-pulse 1.5s ease-in-out infinite;
+        }
+
+        /* ================================================================
+           BUTTONS - RIPPLE EFFECTS
+           ================================================================ */
+        
+        .ultra-sota-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        .ultra-sota-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .ultra-sota-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .ultra-sota-btn.primary {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .ultra-sota-btn.primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+        }
+
+        /* ================================================================
+           PROGRESS BARS - GRADIENT ANIMATION
+           ================================================================ */
+        
+        .ultra-sota-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .ultra-sota-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            animation: sota-gradient-shift 2s ease infinite;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        /* ================================================================
+           INPUT FIELDS - GLOW ON FOCUS
+           ================================================================ */
+        
+        .ultra-sota-input {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #E2E8F0;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .ultra-sota-input:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #10B981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1), 0 0 20px rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ================================================================
+           LOADING STATE
+           ================================================================ */
+        
         .loading-screen {
             display: flex;
             flex-direction: column;
@@ -79,38 +372,49 @@
             height: 100vh;
             background: var(--bg-deep);
         }
+        
         .loading-spinner {
             width: 50px;
             height: 50px;
             border: 3px solid rgba(59, 130, 246, 0.1);
             border-top-color: var(--accent-primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: sota-spin 1s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        
         .loading-text {
             margin-top: 1.5rem;
             color: #94A3B8;
             font-size: 0.9rem;
         }
         
-        /* CUSTOM SCROLLBAR */
+        /* ================================================================
+           CUSTOM SCROLLBAR
+           ================================================================ */
+        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        
+        @media (max-width: 768px) {
+            .ultra-sota-banner { padding: 1.5rem 1rem; }
+            .ultra-sota-card { padding: 1.5rem; }
+            .ultra-sota-btn { padding: 0.75rem 1.25rem; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
     <div id="root">
         <div class="loading-screen">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Loading WP Content Optimizer Pro...</p>
+            <p class="loading-text">Loading Ultra SOTA Experience...</p>
         </div>
     </div>
-    <!-- CRITICAL: Updated to use root-level index.tsx -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
