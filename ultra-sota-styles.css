@@ -1,0 +1,383 @@
+/* ========================================
+   🚀 ULTRA SOTA STYLES V13.1
+   Enterprise-Grade UI Enhancement System
+   ======================================== */
+
+/* === ANIMATED BANNER === */
+@keyframes ultra-sota-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ultra-sota-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes ultra-sota-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6), 0 0 60px rgba(59, 130, 246, 0.4); }
+}
+
+.ultra-sota-banner {
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e293b 25%,
+    #334155 50%,
+    #1e293b 75%,
+    #0f172a 100%
+  );
+  background-size: 400% 400%;
+  animation: ultra-sota-gradient 8s ease infinite;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6, #10B981) 1;
+  padding: 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ultra-sota-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: ultra-sota-shine 3s infinite;
+}
+
+@keyframes ultra-sota-shine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.ultra-sota-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ultra-sota-icon {
+  font-size: 2rem;
+  animation: ultra-sota-pulse 2s infinite;
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8));
+}
+
+.ultra-sota-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.ultra-sota-subtitle {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ultra-sota-feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #10B981;
+  animation: ultra-sota-glow 3s infinite;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.ultra-sota-feature-badge:hover {
+  background: rgba(16, 185, 129, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+}
+
+.ultra-sota-feature-badge span {
+  font-size: 1rem;
+}
+
+/* === GLASSMORPHISM CARDS === */
+.setup-card,
+.tab-panel,
+.god-mode-panel {
+  background: rgba(15, 23, 42, 0.7) !important;
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.setup-card:hover,
+.tab-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* === ANIMATED BUTTONS === */
+.btn,
+.btn-primary,
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease !important;
+}
+
+.btn::before,
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before,
+.btn-primary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover,
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* === ANIMATED STATUS INDICATORS === */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.95); }
+}
+
+.key-status-icon .success,
+.status-badge.success {
+  animation: status-pulse 2s infinite;
+  color: #10B981 !important;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+}
+
+.key-status-spinner {
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top-color: #3B82F6;
+  animation: spin 0.8s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === GRADIENT HEADLINES === */
+.gradient-headline {
+  background: linear-gradient(135deg, #10B981 0%, #3B82F6 50%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+}
+
+.gradient-headline::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* === ENHANCED INPUTS === */
+input[type="text"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+}
+
+/* === ANIMATED TABS === */
+.tab-btn {
+  position: relative;
+  transition: all 0.3s ease !important;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #3B82F6);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  border-radius: 2px 2px 0 0;
+}
+
+.tab-btn:hover::after,
+.tab-btn.active::after {
+  width: 100%;
+}
+
+.tab-btn.active {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10B981 !important;
+  font-weight: 600;
+}
+
+/* === SMOOTH SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #10B981, #3B82F6);
+  border-radius: 10px;
+  border: 2px solid rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #3B82F6, #8B5CF6);
+}
+
+/* === ENHANCED TABLE STYLES === */
+table {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+thead {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2)) !important;
+}
+
+tbody tr {
+  transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+  background: rgba(16, 185, 129, 0.1) !important;
+  transform: scale(1.01);
+}
+
+/* === GOD MODE DASHBOARD === */
+.god-mode-logs,
+.optimized-list {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: rgba(2, 6, 23, 0.9) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.god-mode-logs::-webkit-scrollbar-thumb,
+.optimized-list::-webkit-scrollbar-thumb {
+  background: #10B981;
+}
+
+/* === VERSION BADGE === */
+.version-badge {
+  background: linear-gradient(135deg, #10B981, #3B82F6);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+  animation: ultra-sota-glow 3s infinite;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .ultra-sota-banner {
+    padding: 1rem;
+  }
+  
+  .ultra-sota-title {
+    font-size: 1rem;
+  }
+  
+  .ultra-sota-subtitle {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ultra-sota-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* === PERFORMANCE OPTIMIZATION === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === ACCESSIBILITY === */
+.ultra-sota-banner:focus-within {
+  outline: 3px solid #10B981;
+  outline-offset: 3px;
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .ultra-sota-banner,
+  .ultra-sota-feature-badge {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+  }
+}
